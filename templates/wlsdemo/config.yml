@@ -1,0 +1,5 @@
+name: WebLogic 11g Demo System
+description: |
+  Oracle WebLogic 11g with demo Java application deployed.
+version: 0.1
+category: Middleware

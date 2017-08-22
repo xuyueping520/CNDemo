@@ -1,0 +1,17 @@
+version: '2'
+services:
+  ubuntu:
+    image: ubuntu:14.04
+    stdin_open: true
+    tty: true
+    command:
+    - sleep
+    - '3600'
+    labels:
+      io.rancher.container.pull_image: always
+  centos:
+    image: centos
+    stdin_open: true
+    tty: true
+    labels:
+      io.rancher.container.pull_image: always

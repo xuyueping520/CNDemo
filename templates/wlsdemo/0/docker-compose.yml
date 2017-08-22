@@ -1,0 +1,42 @@
+managedserver:
+  environment:
+    APP_NAME_1: ${app_name_1}
+    APP_NAME_2: ${app_name_2}
+    APP_PATH_1: ${app_path_1}
+    APP_PATH_2: ${app_path_2}
+  labels:
+    io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
+    io.rancher.container.pull_image: always
+  tty: true
+  command:
+  - bash
+  - start-managed-server.sh
+  image: rancherapps.com:5000/wlsdemo:latest
+  links:
+  - wlsadmin:wlsadmin
+  stdin_open: true
+wlsadmin:
+  ports:
+  - 7001:7001/tcp
+  environment:
+    DATABASE_HOST: ${database_host}
+    DATABASE_PASSWORD: ${database_password}
+    DATABASE_USERNAME: ${database_username}
+    DATASOURCE_NAME: ${datasource_name}
+    JNDI_NAME: ${jndi_name}
+  labels:
+    io.rancher.container.hostname_override: container_name
+  tty: true
+  command:
+  - bash
+  - start-admin-server.sh
+  image: rancherapps.com:5000/wlsdemo:latest
+  stdin_open: true
+wlslb:
+  ports:
+  - 8001:8001
+  tty: true
+  image: rancher/load-balancer-service
+  links:
+  - managedserver:managedserver
+  stdin_open: true

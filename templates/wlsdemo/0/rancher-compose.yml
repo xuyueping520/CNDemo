@@ -1,0 +1,76 @@
+.catalog:
+  name: "WebLogic 11g System Demo"
+  version: "0.1"
+  description: "Demo catalog for Java Application with WebLogic in Docker"
+  minimum_rancher_version: v0.46.0
+  questions:
+    - variable: app_name_1
+      description: "Name of your first application, name it as a variable, no space is allowed"
+      label: "First application name"
+      type: "string"
+      required: true
+      default: "sample"
+    - variable: app_name_2
+      description: "Name of your second application, name it as a variable, no space is allowed"
+      label: "Second application name"
+      type: "string"
+      required: true
+      default: "sample2"
+    - variable: app_path_1
+      description: "Path of your first application, name it as a variable, no space is allowed"
+      label: "First application path"
+      type: "string"
+      required: true
+      default: /tpsys/weblogic/artifacts/sample
+    - variable: app_path_2
+      description: "Path of your second application, name it as a variable, no space is allowed"
+      label: "Second application path"
+      type: "string"
+      required: true
+      default: /tpsys/weblogic/artifacts/sample2
+    - variable: datasource_name
+      description: "Name of your Oracle data source, name it as a variable, no space is allowed"
+      label: "Data source name"
+      type: "string"
+      required: true
+      default: "testdb"
+    - variable: jndi_name
+      description: "Name of your Oracle data source JNDI name, name it as a variable, no space is allowed"
+      label: "JNDI Name"
+      type: "string"
+      required: true
+      default: "jdbc/testdbJNDI"
+    - variable: database_host
+      description: "IP address or FQDN of your Oracle database server, name it as a variable, no space is allowed"
+      label: "Oracle Database Host Address"
+      type: "string"
+      required: true
+      default: "db.local.net:1521:testdb"
+    - variable: database_username
+      description: "Username of your Oracle database, name it as a variable, no space is allowed"
+      label: "Database User Name"
+      type: "string"
+      required: true
+      default: "user"
+    - variable: database_password
+      description: "Password of your Oracle database, name it as a variable, no space is allowed"
+      label: "Database Password"
+      type: "string"
+      required: true
+      default: "password"
+managedserver:
+  scale: 1
+wlsadmin:
+  scale: 1
+wlslb:
+  scale: 1
+  load_balancer_config:
+    lb_cookie_stickiness_policy:
+      cookie: sessioncookie
+    haproxy_config: {}
+  health_check:
+    port: 42
+    interval: 2000
+    unhealthy_threshold: 3
+    healthy_threshold: 2
+    response_timeout: 2000
